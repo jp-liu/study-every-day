@@ -4,6 +4,7 @@
     "target": "es5",
     "noImplicitAny": true,
     "outDir": "./dist",
+    "downlevelIteration":true,
     "sourceMap": true
   },
   "include": ["src/**/*"]
