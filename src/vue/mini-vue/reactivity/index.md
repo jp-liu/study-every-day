@@ -2,7 +2,7 @@
 
 说道 `vue` 大家都知道 `vue` 的双向数据绑定,让我们能够基于 **MVVM** 模型, 通过 **声明式** 变成的方式,操作数据和页面
 
-![mvvm3](D:\project\github\study-everyday\src\vue\mini-vue\images\mvvm3.png)
+![mvvm3](D:\project\github\study-everyday\src\vue\mini-vue\reactivity\images\mvvm3.png)
 
 **vue** 作为中间层, 响应式系统,是不可或缺的部分,先来实现一个简单版本的 `reactivity` 响应式系统模块, 以这个为基础,才方便进行后面的功能实现
 
@@ -74,7 +74,7 @@ function createGetter(isReadonly = false) {
 
 我们的响应式系统需要通过 `effect` 副作用函数来创建依赖, 在**vue**中是`render` 函数, 我们在 `render` 函数中, 会去访问代理对象的属性从而触发 `get` 得到我们的依赖,渲染函数, 然后在数据变更的时候,才能在 `set` 中, 通知渲染函数创建新的 `vnode` 进行`diff` 算法比较, 更新 `dom`, 这个时候我们来看个模型,看看是如何做的
 
-![effect](D:\project\github\study-everyday\src\vue\mini-vue\reactivity\img\effect.png)
+![effect](D:\project\github\study-everyday\src\vue\mini-vue\reactivity\images\effect.png)
 
 这是一个简版的模型和数据结构的实现, 在源码中,**vue** 将 `fn` 抽象成了一个类,进行了封装,方便实现更多的功能
 
