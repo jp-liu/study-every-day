@@ -1,3 +1,4 @@
+import { forEach } from '../for-each'
 import { unique } from '../unique'
 
 describe('handwriting', () => {
@@ -14,5 +15,27 @@ describe('handwriting', () => {
       { id: 1, name: 'a' },
       { id: 2, name: 'c' }
     ])
+  })
+
+  it('forEach', () => {
+    const arr = [1, 2, 3]
+    let i1 = 0
+    let i2 = 0
+    let i3 = 0
+    const fn = jest.fn((item, idx, origin) => {
+      expect(origin).toStrictEqual(arr)
+      if (idx === 0) {
+        i1 = item
+      } else if (idx === 1) {
+        i2 = item
+      } else if (idx === 2) {
+        i3 = item
+      }
+    })
+    forEach(arr, fn)
+    expect(fn).toHaveBeenCalledTimes(3)
+    expect(i1).toBe(1)
+    expect(i2).toBe(2)
+    expect(i3).toBe(3)
   })
 })
