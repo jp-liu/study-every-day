@@ -1,6 +1,6 @@
 ## 响应式系统
 
-说道 `vue` 大家都知道 `vue` 的双向数据绑定,让我们能够基于 **MVVM** 模型, 通过 **声明式** 变成的方式,操作数据和页面
+说道 `vue` 大家都知道 `vue` 的双向数据绑定,让我们能够基于 **MVVM** 模型, 通过 **声明式** 编程的方式,操作数据和页面
 
 ![mvvm3](D:\project\github\study-everyday\src\vue\mini-vue\reactivity\images\mvvm3.png)
 
@@ -16,11 +16,11 @@
 
 **vue3** 中是通过 `Proxy` 这个代理对象来实现,为什么需要变更呢,这个文章很多,我就说自己的拙见:
 
-    1. **Proxy** 基于 `Reflect` 反射,可以代理几乎对象的所有行为,有十几种,包括 `get/set/deleteProperty/definePropertygetOwnPropertyDescriptor` 等等,争取做到无死角响应式啊
+1. **Proxy** 基于 `Reflect` 反射,可以代理几乎对象的所有行为,有十几种,包括 `get/set/deleteProperty/definePropertygetOwnPropertyDescriptor` 等等,争取做到无死角响应式啊
 
 2. 第二点是 **Proxy** 是目前浏览器的研究方向,它在未来的表现只会比现在更好,更快
 
-想学习的可以前往 **MDN** 了解 [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
+详情的可以前往 **MDN** 了解 [Proxy](https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy)
 
 ### 1.2 Reactivity
 
@@ -596,7 +596,7 @@ class ComputedRefImpl {
   }
 }
 
-// 简版,应该也有setter才对
+// @TODO setter
 export function computed(getter) {
   return new ComputedRefImpl(getter)
 }
@@ -604,4 +604,5 @@ export function computed(getter) {
 
 ### 1.5 总结
 
-响应式系统简版的实现,是相对其他包来说,算是简单的, 我们通过模型, 还有 `get/set` 的方式触发 `track/trigger`,进行依赖收集和触发更新, 能很清晰的看懂这个模式, 不得不说简单易用很强, `computed` 的实现也是很有技巧的, 真的需要大家发挥自己的想象,可以去做更多有用的工具
+1. 通过实现简版,我们去阅读 `vue` 的源码,也是可以更顺手一些
+2. 响应式系统简版的实现,是相对其他包来说,算是简单的, 我们通过模型, 还有 `get/set` 的方式触发 `track/trigger`,进行依赖收集和触发更新, 能很清晰的看懂这个模式, 不得不说简单易用很强, `computed` 的实现也是很有技巧的, 真的需要大家发挥自己的想象,自己也可以去做更多有用的工具
