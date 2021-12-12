@@ -25,18 +25,14 @@ export function unique<T>(arr: T[], key?: string): T[] {
   // 重构
   if (!key) return [...new Set(arr)]
 
-  // 结果数组
-  const res: T[] = []
   // 临时 keys 数组,用于比较
   const keys: string[] = []
 
-  for (let i = 0; i < arr.length; i++) {
-    const item = arr[i] as any
-    if (!keys.includes(item[key])) {
-      keys.push(item[key])
-      res.push(item)
+  return arr.reduce((res, cur) => {
+    if (!keys.includes((cur as any)[key])) {
+      keys.push((cur as any)[key])
+      res.push(cur)
     }
-  }
-
-  return res
+    return res
+  }, [])
 }
