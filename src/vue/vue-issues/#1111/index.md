@@ -215,28 +215,10 @@ function createRef(rawValue: unknown, shallow = false) {
 
 3. **Symbol()** 私有符号在 `TS` 中的运用
 
-4. 组合大于继承, 在 `vue3` 中我们可以发现 `尤大` 特别喜欢使用内部创建对象返回, 而不是创建类,进行封装, `createApp` 返回的 `app` 实例对象,就是一个对象, 创建代理对象,都是通过 `createReactiveObject` 返回对象, 今天的 `issues` 中的 `Ref`
+4. 在最近写的 `mini-vue` 中, 以后一定也要加上自己的类型
 
-   ```ts
-   function createRef(rawValue: unknown, shallow = false) {
-     //...
-     const r = {
-       __v_isRef: true,
-       get value() {
-         //...
-       },
-       set value(newVal) {
-         //...
-       }
-     }
-     return r
-   }
-   ```
+5. 还可以在扩展几个点, 周末的时候进行填充
 
-5. 在最近写的 `mini-vue` 中, 以后一定也要加上自己的类型,还有和自己实现的 `RefImpl` 类作区分,进行实现
-
-6. 还可以在扩展几个点, 周末的时候进行填充
-
-   1. 类型测试
-   2. API Extractor 的玩法
-   3. vue3 build 的流程 比如如何生成 .d.ts
+   1. 类型测试 => vue3 的 `test-dts` 可以查看,很牛的
+   2. API Extractor 的玩法 => 暂时没看
+   3. vue3 build 的流程 比如如何生成 .d.ts => `rollup` 打包 `TS` 编译选项添加 `declarations: true`
