@@ -4,8 +4,9 @@
     "target": "es5",
     "noImplicitAny": true,
     "outDir": "./dist",
-    "downlevelIteration":true,
-    "sourceMap": true
+    "downlevelIteration": true,
+    "sourceMap": true,
+    "lib": ["DOM", "DOM.Iterable","ES2015"]
   },
   "include": ["src/**/*"]
 }
