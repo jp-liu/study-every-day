@@ -7,11 +7,7 @@
     "outDir": "./dist",
     "downlevelIteration": true,
     "sourceMap": true,
-<<<<<<< HEAD
-    "lib": ["DOM", "DOM.Iterable","ES2015"]
-=======
     "types": ["node"]
->>>>>>> 566ae9f579fcabc5db88369015dd8f3175cb1692
   },
   "include": ["src/**/*"]
 }
