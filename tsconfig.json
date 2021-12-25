@@ -7,7 +7,7 @@
     "outDir": "./dist",
     "downlevelIteration": true,
     "sourceMap": true,
-    "types": ["node"]
+    "types": ["node", "jest"]
   },
   "include": ["src/**/*"]
 }

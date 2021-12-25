@@ -4,9 +4,12 @@ Array.prototype.myFind = function (callback) {
   // 1.获取数组本身
   const _this = this
 
-  // 2.执行回调函数
+  // 2.这个方法第二个参数可以指定调用的`this`
+  const thisArg = arguments[1] || window
+
+  // 3.执行回调函数
   for (let i = 0; i < _this.length; i++) {
-    if (callback(_this[i], i, _this)) {
+    if (callback.call(thisArg, _this[i], i, _this)) {
       return _this[i]
     }
   }
