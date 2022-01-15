@@ -16,6 +16,10 @@
 >
 > 从现在开始,巩固自己的基础,不要好高骛远,老想着短期效应,而忘记了长期积累,不是一通乱学,就牛的
 
+## 学习方法
+
+![学习方法](./src/assets/image/学习方法.png)
+
 ## 学习路线
 
 - HTML
@@ -34,7 +38,7 @@
 3. [JavaScript 基础系列之判断数组](./src/javascript/基础系列/JavaScript 基础系列之判断数组.md)
 4. [JavaScript 基础系列之 null 和 undefined](./src/javascript/基础系列/JavaScript 基础系列之 null 和 undefined.md)
 5. [JavaScript 基础系列之==和===和类型转换](./src/javascript/基础系列/JavaScript 基础系列之==和===和类型转换.md)
-6. [JavaScript 基础系列之原始值和引用值](./src/javascript/基础系列/JavaScript 基础系列之原始值和引用值.md)
+6. [JavaScript 基础系列之原始 值和引用值](./src/javascript/基础系列/JavaScript 基础系列之原始值和引用值.md)
 7. [JavaScript 基础系列之原始值转换的抽象操作 toPrimitive](./src/javascript/基础系列/JavaScript 基础系列之原始值转换的抽象操作 toPrimitive.md)
 8. [JavaScript 基础系列之 var let 和 const](./src/javascript/基础系列/JavaScript 基础系列之 var let 和 const.md)
 9. [JavaScript 基础系列之 this 指向问题](./src/javascript/基础系列/JavaScript 基础系列之 this 指向问题.md)
@@ -42,3 +46,13 @@
 11. [JavaScript 基础系列之严格模式](./src/javascript/基础系列/JavaScript 基础系列之严格模式.md)
 12. [JavaScript 基础系列之 DOM 操作](./src/javascript/基础系列/JavaScript 基础系列之 DOM 操作.md)
 13. [JavaScript 基础系列之 JSON](./src/javascript/基础系列/JavaScript 基础系列之 JSON.md)
+14. [JavaScript 基础系列之箭头函数](./src/javascript/基础系列/JavaScript 基础系列之箭头函数.md)
+15. [JavaScript 基础系列之 setTimeout 倒计时为什么会出现误差](./src/javascript/基础系列/JavaScript 基础系列之 setTimeout 倒计时为什么会出现误差.md)
+
+## JavaScript 深入系列
+
+1. [JavaScript 深入系列之浏览器如何获取和执行 JS 代码](./src/javascript/深入系列/JavaScript 深入系列之浏览器如何获取和执行 JS 代码.md)
+2. [JavaScript 深入系列之词法作用域和动态作用域](./src/javascript/深入系列/JavaScript 深入系列之词法作用域和动态作用域.md)
+3. [JavaScript 深入系列之执行上下文栈](./src/javascript/深入系列/JavaScript深入系列之执行上下文栈.md)
+4. [JavaScript 深入系列之变量对象](./src/javascript/深入系列/JavaScript深入系列之变量对象.md)
+5. [JavaScript 深入系列之作用域链](./src/javascript/深入系列/JavaScript深入系列之作用域链.md)
