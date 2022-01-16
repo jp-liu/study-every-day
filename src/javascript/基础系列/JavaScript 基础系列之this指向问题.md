@@ -1,13 +1,15 @@
 # this 指向问题
 
 > 先从基本记录一下 `this` 的指向,后面在 `深入系列` 中, 会从规范触发,解读,为什么会是这样的结果
+>
+> [JavaScript 深入系列之从 ECMAScript 规范解读 this](./src/javascript/深入系列/JavaScript深入系列之从ECMAScript规范解读this.md)
 
 在 `js` 中,有一个疑惑的点 `this`, 它的指向问题,存在各种各样的,来看一下,它是如何绑定指向的吧
 
 1. 函数在调用时，`JavaScript` 会默认给 this 绑定一个值
 2. `this` 的绑定和定义的位置（编写的位置）没有关系
 3. `this` 的绑定和调用方式以及调用的位置有关系
-4. `this` 实在运行时,动态绑定的
+4. `this` 是在运行时,动态绑定的
 
 ## `this` 绑定规则
 
@@ -120,6 +122,9 @@ console.log(p)
 ```js
 // 其实算是隐式绑定,因为这些方法都是 `window`的
 window.setTimeout(function () {
+  // 这里或许没这么简单,这个是回调函数,与隐式绑定,没啥关系,这里是浏览器实现的黑盒
+  // 在 v8 中,有一个测试用例,模拟,是采用 call 绑定的,this是指向的 window
+  // 所以这个看具体如何实现
   console.log(this) // window
 }, 2000)
 
@@ -143,6 +148,7 @@ boxDiv.addEventListener('click', function () {
 })
 
 // 3.数组.forEach/map/filter/find
+// 可以通过第二个参数绑定回调函数的`this`
 var names = ['abc', 'cba', 'nba']
 names.forEach(function (item) {
   console.log(item, this)

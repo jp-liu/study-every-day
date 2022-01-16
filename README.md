@@ -41,7 +41,7 @@
 6. [JavaScript 基础系列之原始 值和引用值](./src/javascript/基础系列/JavaScript 基础系列之原始值和引用值.md)
 7. [JavaScript 基础系列之原始值转换的抽象操作 toPrimitive](./src/javascript/基础系列/JavaScript 基础系列之原始值转换的抽象操作 toPrimitive.md)
 8. [JavaScript 基础系列之 var let 和 const](./src/javascript/基础系列/JavaScript 基础系列之 var let 和 const.md)
-9. [JavaScript 基础系列之 this 指向问题](./src/javascript/基础系列/JavaScript 基础系列之 this 指向问题.md)
+9. [JavaScript 基础系列之 this 指向问题](./src/javascript/基础系列/JavaScript 基础系列之 this 指向问题.md.md)
 10. [JavaScript 基础系列之 apply-call-bind](./src/javascript/基础系列/JavaScript 基础系列之 apply-call-bind.md)
 11. [JavaScript 基础系列之严格模式](./src/javascript/基础系列/JavaScript 基础系列之严格模式.md)
 12. [JavaScript 基础系列之 DOM 操作](./src/javascript/基础系列/JavaScript 基础系列之 DOM 操作.md)
@@ -56,3 +56,4 @@
 3. [JavaScript 深入系列之执行上下文栈](./src/javascript/深入系列/JavaScript深入系列之执行上下文栈.md)
 4. [JavaScript 深入系列之变量对象](./src/javascript/深入系列/JavaScript深入系列之变量对象.md)
 5. [JavaScript 深入系列之作用域链](./src/javascript/深入系列/JavaScript深入系列之作用域链.md)
+6. [JavaScript 深入系列之从 ECMAScript 规范解读 this](./src/javascript/深入系列/JavaScript深入系列之从ECMAScript规范解读this.md)
