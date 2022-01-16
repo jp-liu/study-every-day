@@ -33,21 +33,21 @@
 
 ## JavaScript 基础系列
 
-1. [JavaScript 基础系列之 数据类型](./src/javascript/基础系列/JavaScript 基础系列之数据类型.md)
-2. [JavaScript 基础系列之 typeof](./src/javascript/基础系列/JavaScript 基础系列之 typeof.md)
-3. [JavaScript 基础系列之 判断数组](./src/javascript/基础系列/JavaScript 基础系列之判断数组.md)
-4. [JavaScript 基础系列之 null 和 undefined](./src/javascript/基础系列/JavaScript 基础系列之 null 和 undefined.md)
-5. [JavaScript 基础系列之 ==和===和类型转换](./src/javascript/基础系列/JavaScript 基础系列之==和===和类型转换.md)
-6. [JavaScript 基础系列之 原始值和引用值](./src/javascript/基础系列/JavaScript 基础系列之原始值和引用值.md)
-7. [JavaScript 基础系列之 原始值转换的抽象操作 toPrimitive](./src/javascript/基础系列/JavaScript 基础系列之原始值转换的抽象操作 toPrimitive.md)
-8. [JavaScript 基础系列之 var let 和 const](./src/javascript/基础系列/JavaScript 基础系列之 var-let 和 const.md)
-9. [JavaScript 基础系列之 this 指向问题](./src/javascript/基础系列/JavaScript 基础系列之 this 指向问题.md)
-10. [JavaScript 基础系列之 apply-call-bind](./src/javascript/基础系列/JavaScript 基础系列之 apply-call-bind.md)
-11. [JavaScript 基础系列之 严格模式](./src/javascript/基础系列/JavaScript 基础系列之严格模式.md)
-12. [JavaScript 基础系列之 DOM 操作](./src/javascript/基础系列/JavaScript 基础系列之 DOM 操作.md)
-13. [JavaScript 基础系列之 JSON](./src/javascript/基础系列/JavaScript 基础系列之 JSON.md)
-14. [JavaScript 基础系列之 箭头函数](./src/javascript/基础系列/JavaScript 基础系列之箭头函数.md)
-15. [JavaScript 基础系列之 setTimeout 倒计时为什么会出现误差](./src/javascript/基础系列/JavaScript 基础系列之 setTimeout 倒计时为什么会出现误差.md)
+1. [JavaScript 基础系列之数据类型](./src/javascript/基础系列/JavaScript基础系列之数据类型.md)
+2. [JavaScript 基础系列之 typeof](./src/javascript/基础系列/JavaScript基础系列之typeof.md)
+3. [JavaScript 基础系列之判断数组](./src/javascript/基础系列/JavaScript基础系列之判断数组.md)
+4. [JavaScript 基础系列之 null 和 undefined](./src/javascript/基础系列/JavaScript基础系列之null和undefined.md)
+5. [JavaScript 基础系列之==和===和类型转换](./src/javascript/基础系列/JavaScript基础系列之==和===和类型转换.md)
+6. [JavaScript 基础系列之原始值和引用值](./src/javascript/基础系列/JavaScript基础系列之原始值和引用值.md)
+7. [JavaScript 基础系列之原始值转换的抽象操作 toPrimitive](./src/javascript/基础系列/JavaScript基础系列之原始值转换的抽象操作toPrimitive.md)
+8. [JavaScript 基础系列之 var-let-const](./src/javascript/基础系列/JavaScript基础系列之var-let-const.md)
+9. [JavaScript 基础系列之 this 指向问题](./src/javascript/基础系列/JavaScript基础系列之this指向问题.md)
+10. [JavaScript 基础系列之 apply-call-bind](./src/javascript/基础系列/JavaScript基础系列之apply-call-bind.md)
+11. [JavaScript 基础系列之严格模式](./src/javascript/基础系列/JavaScript基础系列之严格模式.md)
+12. [JavaScript 基础系列之 DOM 操作](./src/javascript/基础系列/JavaScript基础系列之DOM操作.md)
+13. [JavaScript 基础系列之 JSON](./src/javascript/基础系列/JavaScript基础系列之JSON.md)
+14. [JavaScript 基础系列之箭头函数](./src/javascript/基础系列/JavaScript基础系列之箭头函数.md)
+15. [JavaScript 基础系列之 setTimeout 倒计时为什么会出现误差](./src/javascript/基础系列/JavaScript基础系列之setTimeout倒计时为什么会出现误差.md)
 
 ## JavaScript 深入系列
 
