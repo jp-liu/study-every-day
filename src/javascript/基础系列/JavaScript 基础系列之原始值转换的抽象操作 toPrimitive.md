@@ -2,7 +2,7 @@
 
 > **`Symbol.toPrimitive` **是一个内置的 Symbol 值，它是作为对象的函数值属性存在的，当一个对象转换为对应的原始值时，会调用此函数。
 >
-> **原始值:** [JavaScript 基础系列之原始值和引用值](./src/javascript/基础系列/JavaScript 基础系列之原始值和引用值.md)
+> **原始值:** [JavaScript 基础系列之原始值和引用值](./JavaScript 基础系列之原始值和引用值.md)
 
 `Symbol.toPrimitive` 调用的时候,会传递一个字符串参数 `hint` ,表示要转换到的原始值的预期类型。 `hint` 参数的取值是 `"number"`、`"string"` 和 `"default"` 中的任意一个。
 
