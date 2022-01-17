@@ -2,7 +2,7 @@
 
 ## 前言
 
-在上篇[JavaScript 深入系列之执行上下文栈](./src/javascript/深入系列/JavaScript深入系列之执行上下文栈.md)中讲到，当 `JavaScript` 代码执行一段 **可执行代码(executable code)**时，会创建对应的 **执行上下文(execution context)**。
+在上篇[JavaScript 深入系列之执行上下文栈](./JavaScript深入系列之执行上下文栈.md)中讲到，当 `JavaScript` 代码执行一段 **可执行代码(executable code)**时，会创建对应的 **执行上下文(execution context)**。
 
 对于每个**执行上下文**，都有三个重要属性：
 

@@ -19,5 +19,9 @@ module.exports = {
       }
     }
   ],
-  rules: {}
+  rules: {
+    'no-extend-native': 0,
+    'no-eval': 0,
+    'no-var': 0
+  }
 }

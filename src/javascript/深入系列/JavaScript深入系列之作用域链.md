@@ -2,11 +2,11 @@
 
 ## 前言
 
-在上篇[JavaScript 深入系列之执行上下文栈](./src/javascript/深入系列/JavaScript深入系列之执行上下文栈.md)中讲到，当 `JavaScript` 代码执行一段 **可执行代码(executable code)**时，会创建对应的 **执行上下文(execution context)**。
+在上篇[JavaScript 深入系列之执行上下文栈](./JavaScript深入系列之执行上下文栈.md)中讲到，当 `JavaScript` 代码执行一段 **可执行代码(executable code)**时，会创建对应的 **执行上下文(execution context)**。
 
 对于每个**执行上下文**，都有三个重要属性：
 
-- **变量对象(Variable object，VO): ** [JavaScript 深入系列之变量对象](./src/javascript/深入系列/JavaScript深入系列之变量对象.md)
+- **变量对象(Variable object，VO): ** [JavaScript 深入系列之变量对象](./JavaScript深入系列之变量对象.md)
 - **作用域链(Scope chain)**
 - **this**
 
@@ -26,7 +26,7 @@
 
 ## 函数创建
 
-在 [JavaScript 深入系列之词法作用域和动态作用域](./src/javascript/深入系列/JavaScript 深入系列之词法作用域和动态作用域.md) 中说道, `JS` 中函数的作用域在定义的时候就已经确定了
+在 [JavaScript 深入系列之词法作用域和动态作用域](./JavaScript 深入系列之词法作用域和动态作用域.md) 中说道, `JS` 中函数的作用域在定义的时候就已经确定了
 
 这是因为函数有一个内部属性 `[[scope]]`, 当函数创建的时候, 就会保存所有**父变量对象**到其中, 可以理解为, `[[scope]]` 就是所有父变量对象的层级链, 但是注意: `[[scope]]` 并不代表完整的作用域链
 

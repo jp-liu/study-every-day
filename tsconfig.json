@@ -7,7 +7,8 @@
     "outDir": "./dist",
     "downlevelIteration": true,
     "sourceMap": true,
-    "types": ["node", "jest"]
+    "types": ["node", "jest"],
+    "suppressImplicitAnyIndexErrors": true
   },
   "include": ["src/**/*"]
 }

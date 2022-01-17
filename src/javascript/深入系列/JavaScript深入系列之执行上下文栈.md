@@ -90,7 +90,7 @@ ECStack = [
 
 ## 解答思考题
 
-好啦，现在我们已经了解了执行上下文栈是如何处理执行上下文的，所以让我们看看上篇笔记[JavaScript 深入系列之执行上下文栈](./src/javascript/深入系列/JavaScript深入系列之执行上下文栈.md)最后的思考题：
+好啦，现在我们已经了解了执行上下文栈是如何处理执行上下文的，所以让我们看看上篇笔记[JavaScript 深入系列之执行上下文栈](./JavaScript深入系列之执行上下文栈.md)最后的思考题：
 
 ```js
 var scope = 'global scope'
