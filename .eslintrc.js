@@ -22,6 +22,8 @@ module.exports = {
   rules: {
     'no-extend-native': 0,
     'no-eval': 0,
-    'no-var': 0
+    'no-var': 0,
+    'no-proto': 0,
+    'no-new-object': 0
   }
 }
