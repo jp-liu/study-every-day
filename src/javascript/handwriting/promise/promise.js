@@ -1,171 +1,184 @@
-const { _, currying } = require('../curry')
-// const inspectParams = require('./helper/inspectParams')
+class MyPromise {
+  // 为了统一用static创建静态属性，用来管理状态
+  static PENDING = 'pending'
+  static FULFILLED = 'fulfilled'
+  static REJECTED = 'rejected'
 
-const PROMISE_STATE_PENDING = 'pending'
-const PROMISE_STATE_FULFILLED = 'fulfilled'
-const PROMISE_STATE_REJECTED = 'rejected'
-
-/**
- * @description 手写`Promise`
- */
-class LPromise {
+  // 构造函数：通过new命令生成对象实例时，自动调用类的构造函数
   constructor(executor) {
-    this.PromiseState = PROMISE_STATE_PENDING
-    this.PromiseResult = undefined
-    this.fulfilledFns = []
-    this.rejectedFns = []
+    // 给类的构造方法constructor添加一个参数func
+    this.PromiseState = MyPromise.PENDING // 指定Promise对象的状态属性 PromiseState，初始值为pending
+    this.PromiseResult = null // 指定Promise对象的结果 PromiseResult
+    this.onFulfilledCallbacks = [] // 保存成功回调
+    this.onRejectedCallbacks = [] // 保存失败回调
 
     const resolve = value => {
-      if (this.PromiseState !== PROMISE_STATE_PENDING) return
-      this.PromiseResult = value
-      this.PromiseState = PROMISE_STATE_FULFILLED
-      queueMicrotask(() => {
-        this.fulfilledFns.forEach(fn => fn())
-      })
+      if (this.PromiseState !== MyPromise.PENDING) return
+      // result为成功态时接收的终值
+      // 只能由pedning状态 => fulfilled状态 (避免调用多次resolve reject)
+      // 状态变化只能在宏/微任务中执行,如果在外面直接执行,then的时候,就会直接执行回调
+      if (this.PromiseState === MyPromise.PENDING) {
+        /**
+         * 为什么resolve和reject要加queueMicrotask?
+         * 2.2.4规范 onFulfilled 和 onRejected 只允许在 execution context 栈仅包含平台代码时运行.
+         * 注1 这里的平台代码指的是引擎、环境以及 promise 的实施代码。实践中要确保 onFulfilled 和 onRejected 方法异步执行，且应该在 then 方法被调用的那一轮事件循环之后的新执行栈中执行。
+         * 这个事件队列可以采用“宏任务（macro-task）”机制，比如queueMicrotask 或者 setImmediate； 也可以采用“微任务（micro-task）”机制来实现， 比如 MutationObserver 或者process.nextTick。
+         */
+        queueMicrotask(() => {
+          /**
+           * 在执行resolve或者reject的时候，遍历自身的callbacks数组，
+           * 看看数组里面有没有then那边 保留 过来的 待执行函数，
+           * 然后逐个执行数组里面的函数，执行的时候会传入相应的参数
+           */
+          this.PromiseResult = value
+          this.PromiseState = MyPromise.FULFILLED
+          this.onFulfilledCallbacks.forEach(callback => {
+            callback()
+          })
+        })
+      }
     }
+
     const reject = reason => {
-      if (this.PromiseState !== PROMISE_STATE_PENDING) return
-      this.PromiseResult = reason
-      this.PromiseState = PROMISE_STATE_REJECTED
-      queueMicrotask(() => {
-        this.rejectedFns.forEach(fn => fn())
-      })
+      if (this.PromiseState !== MyPromise.PENDING) return
+      // reason为拒绝态时接收的终值
+      // 只能由pedning状态 => rejected状态 (避免调用多次resolve reject)
+      // 状态变化只能在宏/微任务中执行,如果在外面直接执行,then的时候,就会直接执行回调
+      if (this.PromiseState === MyPromise.PENDING) {
+        queueMicrotask(() => {
+          this.PromiseResult = reason
+          this.PromiseState = MyPromise.REJECTED
+          this.onRejectedCallbacks.forEach(callback => {
+            callback()
+          })
+        })
+      }
     }
 
-    executor(resolve, reject)
+    try {
+      /**
+       * executor()传入resolve和reject，
+       * resolve()和reject()方法在外部调用，这里需要用bind修正一下this指向
+       * new 对象实例时，自动执行func()
+       */
+      executor(resolve, reject)
+    } catch (error) {
+      // 生成实例时(执行resolve和reject)，如果报错，就把错误信息传入给reject()方法，并且直接执行reject()方法
+      this.reject(error)
+    }
   }
 
+  /**
+   * [注册fulfilled状态/rejected状态对应的回调函数]
+   * @param {function} onFulfilled  fulfilled状态时 执行的函数
+   * @param {function} onRejected  rejected状态时 执行的函数
+   * @returns {function} newPromsie  返回一个新的promise对象
+   */
   then(onFulfilled, onRejected) {
-    // 1,链式调用
-    return new LPromise((resolve, reject) => {
-      // 1.部分特殊情况处理
-      const handlerError = currying(execFnWithError)(
-        _,
-        _,
-        this,
-        resolve,
-        reject
-      )
-      const defaultOnFulfilled = value => value
-      const defaultOnRejected = reason => {
-        throw reason
-      }
-      onFulfilled = onFulfilled || defaultOnFulfilled
-      onRejected = onRejected || defaultOnRejected
-
-      // 2.延迟的`then`需要支持调用
-      if (this.PromiseState === PROMISE_STATE_FULFILLED) {
-        handlerError(onFulfilled, this.PromiseResult)
-      }
-
-      if (this.PromiseState === PROMISE_STATE_REJECTED) {
-        handlerError(onRejected, this.PromiseResult)
-      }
-
-      // 3.多组`then`
-      if (this.PromiseState === PROMISE_STATE_PENDING) {
-        this.fulfilledFns.push(() => {
-          handlerError(onFulfilled, this.PromiseResult)
-        })
-        this.rejectedFns.push(() => {
-          handlerError(onRejected, this.PromiseResult)
-        })
-      }
-    })
-  }
-
-  catch(onRejected) {
-    return this.then(undefined, onRejected)
-  }
-
-  finally(onFinally) {
-    return this.then(onFinally, onFinally)
-  }
-
-  static resolve(value) {
-    return new LPromise(resolve => resolve(value))
-  }
-
-  static reject(reason) {
-    return new LPromise((_, reject) => reject(reason))
-  }
-
-  static all(promises) {
-    return new LPromise((resolve, reject) => {
-      const ps = []
-      for (const promise of promises) {
-        promise.then(
-          value => {
-            ps.push(value)
-            if (ps.length === promises.length) {
-              resolve(ps)
-            }
-          },
-          reason => {
-            reject(reason)
+    /**
+     * 参数校验：Promise规定then方法里面的两个参数如果不是函数的话就要被忽略
+     * 所谓“忽略”并不是什么都不干，
+     * 对于onFulfilled来说“忽略”就是将value原封不动的返回，
+     * 对于onRejected来说就是返回reason，
+     *     onRejected因为是错误分支，我们返回reason应该throw一个Error
+     */
+    onFulfilled =
+      typeof onFulfilled === 'function' ? onFulfilled : value => value
+    onRejected =
+      typeof onRejected === 'function'
+        ? onRejected
+        : reason => {
+            throw reason
           }
-        )
-      }
-    })
-  }
 
-  static allSettled(promises) {
-    return new LPromise(resolve => {
-      const ps = []
-      for (const promise of promises) {
-        promise.then(
-          value => {
-            ps.push({ state: PROMISE_STATE_FULFILLED, value: value })
-            if (ps.length === promises.length) {
-              resolve(ps)
-            }
-          },
-          reason => {
-            ps.push({ state: PROMISE_STATE_REJECTED, value: reason })
-            if (ps.length === promises.length) {
-              resolve(ps)
-            }
+    // 2.2.7规范 then 方法必须返回一个 promise 对象
+    const promise2 = new MyPromise((resolve, reject) => {
+      if (this.PromiseState === MyPromise.FULFILLED) {
+        /**
+         * 为什么这里要加定时器queueMicrotask？
+         * 2.2.4规范 onFulfilled 和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用 注1
+         * 这里的平台代码指的是引擎、环境以及 promise 的实施代码。
+         * 实践中要确保 onFulfilled 和 onRejected 方法异步执行，且应该在 then 方法被调用的那一轮事件循环之后的新执行栈中执行。
+         * 这个事件队列可以采用“宏任务（macro-task）”机制，比如queueMicrotask 或者 setImmediate； 也可以采用“微任务（micro-task）”机制来实现， 比如 MutationObserver 或者process.nextTick。
+         */
+        queueMicrotask(() => {
+          try {
+            // 2.2.7.1规范 如果 onFulfilled 或者 onRejected 返回一个值 x ，则运行下面的 Promise 解决过程：[[Resolve]](promise2, x)，即运行resolvePromise()
+            const x = onFulfilled(this.PromiseResult)
+            resolvePromise(promise2, x, resolve, reject)
+          } catch (e) {
+            // 2.2.7.2 如果 onFulfilled 或者 onRejected 抛出一个异常 e ，则 promise2 必须拒绝执行，并返回拒因 e
+            reject(e) // 捕获前面onFulfilled中抛出的异常
           }
-        )
+        })
+      } else if (this.PromiseState === MyPromise.REJECTED) {
+        queueMicrotask(() => {
+          try {
+            const x = onRejected(this.PromiseResult)
+            resolvePromise(promise2, x, resolve, reject)
+          } catch (e) {
+            reject(e)
+          }
+        })
+      } else if (this.PromiseState === MyPromise.PENDING) {
+        // pending 状态保存的 resolve() 和 reject() 回调也要符合 2.2.7.1 和 2.2.7.2 规范
+        this.onFulfilledCallbacks.push(() => {
+          queueMicrotask(() => {
+            try {
+              const x = onFulfilled(this.PromiseResult)
+              resolvePromise(promise2, x, resolve, reject)
+            } catch (e) {
+              reject(e)
+            }
+          })
+        })
+        this.onRejectedCallbacks.push(() => {
+          queueMicrotask(() => {
+            try {
+              const x = onRejected(this.PromiseResult)
+              resolvePromise(promise2, x, resolve, reject)
+            } catch (e) {
+              reject(e)
+            }
+          })
+        })
       }
     })
-  }
 
-  static race(promises) {
-    return new LPromise((resolve, reject) => {
-      for (const promise of promises) {
-        promise.then(resolve, reject)
-      }
-    })
-  }
-
-  static any(promises) {
-    return new LPromise(resolve => {
-      for (const promise of promises) {
-        promise.then(resolve)
-      }
-    })
+    return promise2
   }
 }
 
-function execFnWithError(fn, value, p, resolve, reject) {
-  try {
-    const res = fn(value)
-    inspectParams(p, res, resolve, reject)
-  } catch (err) {
-    reject(err)
-  }
-}
-
-function inspectParams(promise2, x, resolve, reject) {
+/**
+ * 对resolve()、reject() 进行改造增强 针对resolve()和reject()中不同值情况 进行处理
+ * @param  {promise} promise2 promise1.then方法返回的新的promise对象
+ * @param  {[type]} x         promise1中onFulfilled或onRejected的返回值
+ * @param  {[type]} resolve   promise2的resolve方法
+ * @param  {[type]} reject    promise2的reject方法
+ */
+function resolvePromise(promise2, x, resolve, reject) {
+  // 2.3.1规范 如果 promise 和 x 指向同一对象，以 TypeError 为据因拒绝执行 promise
   if (x === promise2) {
     return reject(new TypeError('Chaining cycle detected for promise'))
   }
-  if (x instanceof LPromise) {
-    if (x.PromiseState === 'pending') {
-      x.then(y => inspectParams(promise2, y, resolve, reject), reject)
-    } else {
+
+  // 2.3.2规范 如果 x 为 Promise ，则使 promise2 接受 x 的状态
+  if (x instanceof MyPromise) {
+    if (x.PromiseState === MyPromise.PENDING) {
+      /**
+       * 2.3.2.1 如果 x 处于等待态， promise 需保持为等待态直至 x 被执行或拒绝
+       *         注意"直至 x 被执行或拒绝"这句话，
+       *         这句话的意思是：x 被执行x，如果执行的时候拿到一个y，还要继续解析y
+       */
+      x.then(y => {
+        resolvePromise(promise2, y, resolve, reject)
+      }, reject)
+    } else if (x.PromiseState === MyPromise.FULFILLED) {
+      // 2.3.2.2 如果 x 处于执行态，用相同的值执行 promise
       resolve(x.PromiseResult)
+    } else if (x.PromiseState === MyPromise.REJECTED) {
+      // 2.3.2.3 如果 x 处于拒绝态，用相同的据因拒绝 promise
+      reject(x.PromiseResult)
     }
   } else if (x !== null && (typeof x === 'object' || typeof x === 'function')) {
     // 2.3.3 如果 x 为对象或函数
@@ -193,7 +206,7 @@ function inspectParams(promise2, x, resolve, reject) {
           y => {
             if (called) return
             called = true
-            inspectParams(promise2, y, resolve, reject)
+            resolvePromise(promise2, y, resolve, reject)
           },
           // 2.3.3.3.2 如果 rejectPromise 以据因 r 为参数被调用，则以据因 r 拒绝 promise
           r => {
@@ -225,4 +238,39 @@ function inspectParams(promise2, x, resolve, reject) {
   }
 }
 
-module.exports = LPromise
+MyPromise.deferred = function () {
+  const result = {}
+  result.promise = new MyPromise((resolve, reject) => {
+    result.resolve = resolve
+    result.reject = reject
+  })
+  return result
+}
+
+const p = new MyPromise((resolve, reject) => {
+  resolve(123)
+  resolve(123)
+  resolve(123)
+  resolve(123)
+  resolve(123)
+  resolve(123)
+  reject(456)
+})
+
+p.then(
+  res => {
+    console.log('res=>>>>', res)
+  },
+  reason => {
+    console.log('err->>>', reason)
+  }
+).then(
+  res => {
+    console.log('res=>>>>', res)
+  },
+  reason => {
+    console.log('err->>>', reason)
+  }
+)
+
+module.exports = MyPromise
