@@ -55,7 +55,6 @@
 //     }
 //   }
 // }
-
 var _ = {}
 
 // var fn = curry(function(a, b, c, d, e) {
@@ -120,17 +119,17 @@ function currying(fn, args = [], holes = []) {
     }
   }
 }
-var fn1 = currying(function (a, b, c, d, e) {
-  console.log([a, b, c, d, e])
-})
+// var fn1 = currying(function (a, b, c, d, e) {
+//   console.log([a, b, c, d, e])
+// })
 
 // 验证 输出全部都是 [1, 2, 3, 4, 5]
-fn1(1, 2, 3, 4, 5)
-fn1(_, 2, 3, 4, 5)(1)
-fn1(1, _, 3, 4, 5)(2)
-fn1(1, _, 3)(_, 4)(2)(5)
-fn1(1, _, _, 4)(_, 3)(2)(5)
-fn1(_, 2)(_, _, 4)(1)(3)(5)
+// fn1(1, 2, 3, 4, 5)
+// fn1(_, 2, 3, 4, 5)(1)
+// fn1(1, _, 3, 4, 5)(2)
+// fn1(1, _, 3)(_, 4)(2)(5)
+// fn1(1, _, _, 4)(_, 3)(2)(5)
+// fn1(_, 2)(_, _, 4)(1)(3)(5)
 
 /**
  * @description 柯里化函数
@@ -138,64 +137,67 @@ fn1(_, 2)(_, _, 4)(1)(3)(5)
  * @param { any[] } args 预置参数
  * @param { number[] } holes 占位符信息
  */
-function currying1(fn, args = [], holes = []) {
-  const length = fn.length
+// function currying1(fn, args = [], holes = []) {
+//   const length = fn.length
 
-  return function (...rest) {
-    // 1.准备上一调用的参数消息
-    const _args = args.slice() // 上一次的参数
-    const _holes = holes.slice() // 上一次的占位符信息
-    const argLen = _args.length // 参数长度
-    const holeLen = _holes.length // 占位符长度
-    let index = 0
+//   return function (...rest) {
+//     // 1.准备上一调用的参数消息
+//     const _args = args.slice() // 上一次的参数
+//     const _holes = holes.slice() // 上一次的占位符信息
+//     const argLen = _args.length // 参数长度
+//     const holeLen = _holes.length // 占位符长度
+//     let index = 0
 
-    // 2.填充参数
-    for (let i = 0; i < rest.length; i++) {
-      const arg = rest[i]
+//     // 2.填充参数
+//     for (let i = 0; i < rest.length; i++) {
+//       const arg = rest[i]
 
-      // fn2(1, _, 3)(_, 4)
-      // (_, 4) 依旧是补充占位符,不处理,向后移位
-      if (arg === _ && holeLen) {
-        index++
+//       // fn2(1, _, 3)(_, 4)
+//       // (_, 4) 依旧是补充占位符,不处理,向后移位
+//       if (arg === _ && holeLen) {
+//         index++
 
-        // fn2(_, 2)(_, _, 4)
-        if (index > holeLen) {
-          _args.push(arg)
-          // (_, 2)(_, _, 4) index-holeLen = 去除之前的占位符信息
-          _holes.push(index - holeLen + argLen - 1)
-        }
-      } else if (arg === _) {
-        _args.push(arg)
-        _holes.push(argLen + i)
-      } else if (holeLen) {
-        // fn2(1, _, 3)(_, 4)
-        if (index >= holeLen) {
-          _args.push(arg)
-        } else {
-          _args.splice(_holes[index], 1, arg)
-          _holes.splice(index, 1)
-        }
-      } else {
-        _args.push(arg)
-      }
-    }
+//         // fn2(_, 2)(_, _, 4)
+//         if (index > holeLen) {
+//           _args.push(arg)
+//           // (_, 2)(_, _, 4) index-holeLen = 去除之前的占位符信息
+//           _holes.push(index - holeLen + argLen - 1)
+//         }
+//       } else if (arg === _) {
+//         _args.push(arg)
+//         _holes.push(argLen + i)
+//       } else if (holeLen) {
+//         // fn2(1, _, 3)(_, 4)
+//         if (index >= holeLen) {
+//           _args.push(arg)
+//         } else {
+//           _args.splice(_holes[index], 1, arg)
+//           _holes.splice(index, 1)
+//         }
+//       } else {
+//         _args.push(arg)
+//       }
+//     }
 
-    // 3.根据参数数量决定调用函数
-    if (_holes.length || length > _args.length) {
-      return currying1.call(this, fn, _args, _holes)
-    } else {
-      return fn.apply(this, _args)
-    }
-  }
-}
+//     // 3.根据参数数量决定调用函数
+//     if (_holes.length || length > _args.length) {
+//       return currying1.call(this, fn, _args, _holes)
+//     } else {
+//       return fn.apply(this, _args)
+//     }
+//   }
+// }
 
-var fn2 = currying1(function (a, b, c, d, e) {
-  console.log([a, b, c, d, e])
-})
+// var fn2 = currying1(function (a, b, c, d, e) {
+//   console.log([a, b, c, d, e])
+// })
 
 // fn2(1, 2, 3, 4, 5)
 // fn2(_, 2, 3, 4, 5)(1)
 // fn2(1, _, 3, 4, 5)(2)
 // fn2(1, _, 3)(_, 4)(2)(5)
 // fn2(1, _, _, 4)(_, 3)(2)(5)
-fn2(_, 2)(_, _, 4)(1)(3)(5)
+// fn2(_, 2)(_, _, 4)(1)(3)(5)
+
+module.exports._ = _
+module.exports.currying = currying
