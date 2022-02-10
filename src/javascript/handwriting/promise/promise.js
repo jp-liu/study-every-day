@@ -95,11 +95,11 @@ class MyPromise {
     const promise2 = new MyPromise((resolve, reject) => {
       if (this.PromiseState === MyPromise.FULFILLED) {
         /**
-         * 为什么这里要加定时器queueMicrotask？
+         * 为什么这里要加微任务队列queueMicrotask？
          * 2.2.4规范 onFulfilled 和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用 注1
          * 这里的平台代码指的是引擎、环境以及 promise 的实施代码。
          * 实践中要确保 onFulfilled 和 onRejected 方法异步执行，且应该在 then 方法被调用的那一轮事件循环之后的新执行栈中执行。
-         * 这个事件队列可以采用“宏任务（macro-task）”机制，比如queueMicrotask 或者 setImmediate； 也可以采用“微任务（micro-task）”机制来实现， 比如 MutationObserver 或者process.nextTick。
+         * 这个事件队列可以采用“宏任务（macro-task）”机制，比如 setTimeout 或者 setImmediate； 也可以采用“微任务（micro-task）”机制来实现， 比如 MutationObserver 或者 queueMicrotask。
          */
         queueMicrotask(() => {
           try {
