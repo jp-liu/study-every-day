@@ -51,8 +51,8 @@
 
 ## JavaScript 深入系列 [主要学习记录于[冴羽大佬的博客](https://github.com/mqyqingfeng/Blog)]
 
-1. [JavaScript 深入系列之浏览器如何获取和执行 JS 代码](./src/javascript/深入系列/JavaScript 深入系列之浏览器如何获取和执行 JS 代码.md)
-2. [JavaScript 深入系列之词法作用域和动态作用域](./src/javascript/深入系列/JavaScript 深入系列之词法作用域和动态作用域.md)
+1. [JavaScript 深入系列之浏览器如何获取和执行 JS 代码](./src/javascript/深入系列/JavaScript深入系列之浏览器如何获取和执行JS代码.md)
+2. [JavaScript 深入系列之词法作用域和动态作用域](./src/javascript/深入系列/JavaScript深入系列之词法作用域和动态作用域.md)
 3. [JavaScript 深入系列之执行上下文栈](./src/javascript/深入系列/JavaScript深入系列之执行上下文栈.md)
 4. [JavaScript 深入系列之变量对象](./src/javascript/深入系列/JavaScript深入系列之变量对象.md)
 5. [JavaScript 深入系列之作用域链](./src/javascript/深入系列/JavaScript深入系列之作用域链.md)
@@ -61,3 +61,4 @@
 8. [JavaScript 深入系列之参数按值传递](./src/javascript/深入系列/JavaScript深入系列之参数按值传递.md)
 9. [JavaScript 深入系列之 call 和 apply 的模拟实现](./src/javascript/深入系列/JavaScript深入系列之call和apply的模拟实现.md)
 10. [JavaScript 深入系列之 bind 的模拟实现](./src/javascript/深入系列/JavaScript深入系列之bind的模拟实现.md)
+11. [JavaScript 深入系列之从原型到原型链](./src/javascript/深入系列/JavaScript深入系列之从原型到原型链.md)
