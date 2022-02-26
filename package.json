@@ -1,8 +1,7 @@
 {
   "name": "template",
   "version": "1.0.0",
-  "description": "",
-  "main": "index.js",
+  "description": "学习学习",
   "scripts": {
     "test": "jest",
     "prepare": "husky install",
