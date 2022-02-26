@@ -8,15 +8,24 @@
   </head>
   <body>
     <input id="testInput" type="text" />
+    <button onclick="cancel()">取消</button>
 
     <script src="../throttle.js"></script>
     <script>
       console.log(throttle)
       function input() {
         console.log('123')
+        return '123321'
       }
-      const test = throttle1(input, 3000, { leading: true, trailing: true })
+      const test = throttle1(input, 5000, {
+        resultCallback: res => {
+          console.log(res)
+        }
+      })
       testInput.addEventListener('input', test)
+      function cancel() {
+        test.cancel()
+      }
     </script>
   </body>
 </html>

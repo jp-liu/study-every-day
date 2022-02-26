@@ -35,14 +35,14 @@ function throttle(func, wait, options) {
   return throttled
 }
 
-function throttle1(
-  fn,
-  interval,
-  options = { leading: false, trailing: false }
-) {
+function throttle1(fn, interval, options = {}) {
   let timer = null
   let previous = 0
-  const { leading = false, trailing = false } = options
+  const {
+    leading = false,
+    trailing = true,
+    resultCallback = undefined
+  } = options
 
   function throttled(...args) {
     // 1.获取现在时间
@@ -64,7 +64,8 @@ function throttle1(
       }
       // 保障,第二次时间范围内,不会在执行
       previous = now
-      fn.apply(this, args)
+      const result = fn.apply(this, args)
+      if (resultCallback) resultCallback(result)
     }
     // 5.是否执行一次尾调用
     else if (!timer && trailing) {
@@ -75,9 +76,16 @@ function throttle1(
         // 如果是,则 `now - previous < interval 不能执行,等待计时器执行完毕
         previous = !leading ? 0 : Date.now()
         timer = null
-        fn.apply(this, args)
+        const result = fn.apply(this, args)
+        if (resultCallback) resultCallback(result)
       }, remaining)
     }
+  }
+
+  throttled.cancel = function () {
+    clearTimeout(timer)
+    timer = null
+    previous = 0
   }
 
   return throttled
