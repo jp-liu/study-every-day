@@ -1,5 +1,3 @@
-const { _, currying } = require('../curry')
-
 class MyPromise {
   // 为了统一用static创建静态属性，用来管理状态
   static PENDING = 'pending'
@@ -101,18 +99,33 @@ class MyPromise {
       reject = b
     })
 
-    const handleError = currying(execFnWithError)(
-      _,
-      this.PromiseResult,
-      promise2,
-      resolve,
-      reject
-    )
-
     if (this.PromiseState === MyPromise.FULFILLED) {
-      handleError(onFulfilled)
+      /**
+       * 为什么这里要加微任务队列queueMicrotask？
+       * 2.2.4规范 onFulfilled 和 onRejected 只有在执行环境堆栈仅包含平台代码时才可被调用 注1
+       * 这里的平台代码指的是引擎、环境以及 promise 的实施代码。
+       * 实践中要确保 onFulfilled 和 onRejected 方法异步执行，且应该在 then 方法被调用的那一轮事件循环之后的新执行栈中执行。
+       * 这个事件队列可以采用“宏任务（macro-task）”机制，比如 setTimeout 或者 setImmediate； 也可以采用“微任务（micro-task）”机制来实现， 比如 MutationObserver 或者 queueMicrotask。
+       */
+      queueMicrotask(() => {
+        try {
+          // 2.2.7.1规范 如果 onFulfilled 或者 onRejected 返回一个值 x ，则运行下面的 Promise 解决过程：[[Resolve]](promise2, x)，即运行resolvePromise()
+          const x = onFulfilled(this.PromiseResult)
+          resolvePromise(promise2, x, resolve, reject)
+        } catch (e) {
+          // 2.2.7.2 如果 onFulfilled 或者 onRejected 抛出一个异常 e ，则 promise2 必须拒绝执行，并返回拒因 e
+          reject(e) // 捕获前面onFulfilled中抛出的异常
+        }
+      })
     } else if (this.PromiseState === MyPromise.REJECTED) {
-      handleError(onRejected)
+      queueMicrotask(() => {
+        try {
+          const x = onRejected(this.PromiseResult)
+          resolvePromise(promise2, x, resolve, reject)
+        } catch (e) {
+          reject(e)
+        }
+      })
     } else if (this.PromiseState === MyPromise.PENDING) {
       // pending 状态保存的 resolve() 和 reject() 回调也要符合 2.2.7.1 和 2.2.7.2 规范
       this.onFulfilledCallbacks.push(() => {
@@ -139,16 +152,6 @@ class MyPromise {
 
     return promise2
   }
-}
-function execFnWithError(fn, value, p, resolve, reject) {
-  queueMicrotask(() => {
-    try {
-      const x = fn(value)
-      resolvePromise(p, x, resolve, reject)
-    } catch (err) {
-      reject(err)
-    }
-  })
 }
 
 /**
