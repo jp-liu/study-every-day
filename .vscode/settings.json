@@ -1,0 +1,11 @@
+{
+  "leetcode.endpoint": "leetcode-cn",
+  "leetcode.defaultLanguage": "typescript",
+  "leetcode.filePath": {
+    "default": {
+      "folder": "#${id}-${kebab-case-name}",
+      "filename": "${id}.${kebab-case-name}.${ext}"
+    }
+  },
+  "leetcode.workspaceFolder": "e:\\前端学习\\GitHub\\study-every-day\\src\\leetcode\\question"
+}
