@@ -36,4 +36,5 @@ function maxProfit(prices: number[]): number {
   }
   return dp[len - 1][1]
 }
+export {}
 // @lc code=end
