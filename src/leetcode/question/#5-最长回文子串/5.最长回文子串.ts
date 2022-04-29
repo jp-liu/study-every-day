@@ -26,6 +26,8 @@ function longestPalindrome(s: string): string {
       if (s[r] === s[l] && (dp[l + 1][r - 1] || r - l <= 2)) {
         dp[l][r] = true
         // 最长的
+        // r - l 是左侧真实元素数量
+        // r-l+1 就是加上右侧自己这个元素,也就是回文总共元素数量
         if (r - l + 1 > maxLen) {
           maxLen = r - l + 1
           maxStart = l
