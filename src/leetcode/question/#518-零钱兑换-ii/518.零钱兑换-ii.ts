@@ -7,7 +7,7 @@
 // @lc code=start
 function change(amount: number, coins: number[]): number {
   // 动态规划
-  // dp[i] = dp[j - coins[i]]
+  // 1.递推状态: dp[i] 表示coins[i] 能否组成金额j,能组成次数就相加
   const dp = new Array(amount + 1).fill(0)
   dp[0] = 1
   for (let i = 0; i < coins.length; i++) {
