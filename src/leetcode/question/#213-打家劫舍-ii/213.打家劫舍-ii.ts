@@ -7,42 +7,38 @@
 // @lc code=start
 function rob(nums: number[]): number {
   const n = nums.length
-  if (n === 0) return 0
   if (n === 1) return nums[0]
-  if (n === 2) return Math.max(nums[0], nums[1])
-  // 头尾相连,那么头和尾只能偷一个了
-  // 那就去掉头偷一次
-  // 去掉尾偷一次
-  const head = robRange(nums, 0, nums.length - 2)
-  const tail = robRange(nums, 1, nums.length - 1)
+  const dp1 = robRange(nums, 0, n - 2)
+  const dp2 = robRange(nums, 1, n - 1)
+  return Math.max(dp1, dp2)
+}
 
-  return Math.max(head, tail)
-
-  function robRange(nums: number[], start: number, end: number) {
-    // if (start === end) {
-    //   return nums[start]
-    // }
-    // // 偷钱和第一个一样
-    // // 记录上一次偷的钱,当前最多的钱
-    // const dp = new Array(nums.length)
-    // dp[start] = nums[start]
-    // dp[start + 1] = Math.max(nums[start], nums[start + 1])
-    // // 由于start和end是下标,所以 <= end 要等于
-    // for (let i = start + 2; i <= end; i++) {
-    //   dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i])
-    // }
-    // return dp[end]
-
-    let prev = 0,
-      cur = 0,
-      temp
-    for (let i = start; i <= end; i++) {
-      temp = cur
-      cur = Math.max(cur, prev + nums[i])
-      prev = temp
-    }
-    return cur
+function robRange(nums: number[], start: number, end: number) {
+  if (start === end) return nums[start]
+  const dp = new Array(end + 1).fill(0)
+  dp[start] = nums[start]
+  dp[start + 1] = Math.max(nums[start], nums[start + 1])
+  for (let i = start + 2; i <= end; i++) {
+    dp[i] = Math.max(dp[i - 1], dp[i - 2] + nums[i])
   }
+  return dp[end]
+}
+
+function robRange1(nums: number[]) {
+  // prev 是上上次偷的钱 dp[i - 2]
+  // cur  是上一次偷的钱 dp[i - 1]
+  // 在循环中将 cur 更新为当前的钱
+  let prev = 0,
+    cur = 0,
+    temp
+  for (const val of nums) {
+    temp = cur
+    // 当前房间不偷, cur
+    // 当前房间偷,就是偷当前和中间相隔的一家  val + prev
+    cur = Math.max(cur, prev + val)
+    prev = temp
+  }
+  return cur
 }
 export {}
 // @lc code=end
