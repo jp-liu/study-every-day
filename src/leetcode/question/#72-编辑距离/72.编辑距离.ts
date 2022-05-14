@@ -30,4 +30,3 @@ function minDistance(word1: string, word2: string): number {
   return dp[m][n]
 }
 // @lc code=end
-minDistance('horse', 'ros')
