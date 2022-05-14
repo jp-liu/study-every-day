@@ -14,8 +14,8 @@ function numDecodings(s: string): number {
   for (let i = 2; i <= len; i++) {
     const val1 = +s[i - 1]
     const val2 = +s[i - 2] * 10 + val1
-    if (val1 > 0) dp[i] += dp[i - 1]
-    if (val2 > 9 && val2 <= 26) dp[i] += dp[i - 2]
+    if (val1 > 0) dp[i] += dp[i - 1] // 独立成一个编码,则累加上一个
+    if (val2 > 9 && val2 <= 26) dp[i] += dp[i - 2] // 组合成为一个编码,累加上上一个,中间那个不能独立计算了,被组合了
   }
   return dp[len]
 }
