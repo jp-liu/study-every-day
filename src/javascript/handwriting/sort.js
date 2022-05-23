@@ -1,6 +1,6 @@
-const test1 = [2, 3, 1, 512, 532, 11, 556, 78, 90, 877]
-const test2 = [2, 3, 1, 512, 532, 11, 556, 78, 90, 12, 877]
-const test3 = [2, 3, 1, 512, 532, 11, 556, 78, 90, 33, 877]
+const test1 = [2, 3, 1, 512, 532, 22, 11, 556, 78, 90, 877]
+const test2 = [2, 3, 1, 512, 532, 11, 33, 556, 78, 90, 12, 877]
+const test3 = [2, 3, 1, 512, 532, 11, 44, 556, 78, 90, 33, 877]
 // 1.冒泡排序
 function bubblingSort(arr) {
   const len = arr.length - 1
@@ -51,6 +51,7 @@ console.timeEnd('test2')
 // 2.1 原地快排
 // 时间复杂度：O(nlogn)
 // 空间复杂度：O(1)
+// eslint-disable-next-line no-unused-vars
 function quickSortInPlace(arr, start = 0, end = arr.length - 1) {
   if (start < end) {
     const index = quickHelper(arr, start, end)
@@ -64,7 +65,7 @@ function quickHelper(arr, start, end) {
   const init = start
   const flag = arr[init]
   start++
-  while (start <= end) {
+  while (start < end) {
     // 从后往前查找比 flag 小的元素
     while (arr[end] > flag) {
       end--
@@ -84,6 +85,39 @@ function quickHelper(arr, start, end) {
   ;[arr[init], arr[start - 1]] = [arr[start - 1], arr[init]]
   return start
 }
+
+// eslint-disable-next-line no-unused-vars
+function sortArray(nums) {
+  quickSort1(0, nums.length - 1, nums)
+  return nums
+}
+
+function quickSort1(start, end, arr) {
+  if (start < end) {
+    const mid = sort(start, end, arr)
+    quickSort1(start, mid - 1, arr)
+    quickSort1(mid + 1, end, arr)
+  }
+}
+
+function sort(start, end, arr) {
+  const base = arr[start]
+  let left = start
+  let right = end
+  while (left !== right) {
+    while (arr[right] >= base && right > left) {
+      right--
+    }
+    arr[left] = arr[right]
+    while (arr[left] <= base && right > left) {
+      left++
+    }
+    arr[right] = arr[left]
+  }
+  arr[left] = base
+  return left
+}
+
 console.time('test3')
 console.log('原地快速排序', quickSortInPlace(test3))
 console.timeEnd('test3')
