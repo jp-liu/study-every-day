@@ -1,8 +1,8 @@
 class Heap {
-  private compare: <T>(a: T, b: T) => boolean
-  private readonly arr: unknown[]
+  compare
+  arr
 
-  constructor(compare = (a: unknown, b: unknown) => a > b) {
+  constructor(compare = (a, b) => a > b) {
     // 0是占位符,为了让下标对应二叉树的对应元素
     this.arr = [0]
     this.compare = compare
@@ -18,7 +18,7 @@ class Heap {
   /**
    * 插入一个元素
    */
-  push(v: unknown) {
+  push(v) {
     this.arr.push(v)
     this.shiftUp(this.size)
   }
@@ -44,7 +44,7 @@ class Heap {
   /**
    * 插入上浮操作
    */
-  private shiftUp(k: number) {
+  shiftUp(k) {
     const { arr, parent, compare } = this
     let parentIdx
     while (k > 1 && compare(arr[k], arr[(parentIdx = parent(k))])) {
@@ -56,7 +56,7 @@ class Heap {
   /**
    * 删除下沉操作
    */
-  private sinkDown(k: number) {
+  sinkDown(k) {
     const { arr, size, left, right, compare } = this
     // 下沉到底
     let leftIdx, rightIdx
@@ -79,31 +79,33 @@ class Heap {
   /**
    * 交换位置
    */
-  private swap(i: number, j: number) {
+  swap(i, j) {
     ;[this.arr[i], this.arr[j]] = [this.arr[j], this.arr[i]]
   }
 
   /**
    * 分支节点的左子节点
    */
-  private left(k: number) {
+  left(k) {
     return k * 2
   }
 
   /**
    * 分支节点的右子节点
    */
-  private right(k: number) {
+  right(k) {
     return k * 2 + 1
   }
 
   /**
    * 子节点的父节点
    */
-  private parent(k: number) {
+  parent(k) {
     return (k >> 1) | 0
   }
 }
+
+module.exports = Heap
 
 const heap = new Heap((a, b) => a > b)
 heap.push(1)
