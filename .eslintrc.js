@@ -24,6 +24,7 @@ module.exports = {
     'no-eval': 0,
     'no-var': 0,
     'no-proto': 0,
-    'no-new-object': 0
+    'no-new-object': 0,
+    'no-prototype-builtins': 0
   }
 }
