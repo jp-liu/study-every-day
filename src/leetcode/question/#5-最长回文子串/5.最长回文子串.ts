@@ -6,6 +6,33 @@
 
 // @lc code=start
 function longestPalindrome(s: string): string {
+  // 中心扩散法
+  const len = s.length
+  if (!len || len < 2) return s
+
+  let res = ''
+  for (let i = 0; i < len; i++) {
+    const odd = palind(s, i, i)
+    const even = palind(s, i, i + 1)
+    res = odd.length > res.length ? odd : res
+    res = even.length > res.length ? even : res
+  }
+  return res
+}
+
+function palind(s: string, left: number, right: number) {
+  while (left >= 0 && right < s.length && s[left] === s[right]) {
+    left--
+    right++
+  }
+  return s.slice(left + 1, right)
+}
+// @lc code=end
+
+longestPalindrome('babad')
+
+// 动态规划
+function longestPalindrome2(s: string): string {
   // 动态规划
   // 动态规划在于寻找初始状态和递推公式,通过每步得到最优解,达到最终最优解
   const len = s.length
@@ -38,7 +65,7 @@ function longestPalindrome(s: string): string {
   }
   return s.slice(maxStart, maxEnd + 1)
 }
-// @lc code=end
+
 // 中心扩散法
 function longestPalindrome1(s: string): string {
   // 中心扩散法
