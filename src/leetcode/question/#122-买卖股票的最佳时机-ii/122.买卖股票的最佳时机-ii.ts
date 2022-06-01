@@ -6,6 +6,16 @@
 
 // @lc code=start
 function maxProfit(prices: number[]): number {
+  let dp_i_0 = 0
+  let dp_i_1 = -Infinity
+  for (let i = 0; i < prices.length; i++) {
+    dp_i_0 = Math.max(dp_i_0, dp_i_1 + prices[i])
+    dp_i_1 = Math.max(dp_i_1, dp_i_0 - prices[i])
+  }
+  return dp_i_0
+}
+// @lc code=end
+function maxProfit1(prices: number[]): number {
   // 1.贪心
   // 每次都买卖,直到最大值
   // let ret = 0
@@ -42,4 +52,3 @@ function maxProfit(prices: number[]): number {
   return dp[0]
 }
 export {}
-// @lc code=end

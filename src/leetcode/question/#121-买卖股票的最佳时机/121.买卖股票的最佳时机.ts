@@ -6,6 +6,22 @@
 
 // @lc code=start
 function maxProfit(prices: number[]): number {
+  // 状态定义: dp[i][k][0] 表示第 i 天, 不持有股票的总钱数
+  // 状态定义: dp[i][k][1] 表示第 i 天, 持有股票的总钱数
+  // 初始条件,第0天还没开始,所以不持股为 0, 不可能持股,所以为 -Infinity
+  // 状态转移方程: dp[i][k][0] = Math.max(dp[i][k][0], dp[i][k][1] + prices[i])
+  // 状态转移方程: dp[i][k][1] = Math.max(dp[i][k][1], dp[i][k][1] - prices[i])
+  let i_0 = 0,
+    i_1 = -Infinity
+  for (let i = 0; i < prices.length; i++) {
+    i_0 = Math.max(i_0, i_1 + prices[i])
+    i_1 = Math.max(i_1, -prices[i])
+  }
+  return i_0
+}
+// @lc code=end
+maxProfit([7, 1, 5, 3, 6, 4])
+function maxProfit1(prices: number[]) {
   // 贪心算法
   let min = Infinity
   let ret = 0
@@ -37,4 +53,3 @@ function maxProfit(prices: number[]): number {
   return dp[len - 1][1]
 }
 export {}
-// @lc code=end
