@@ -1,13 +1,14 @@
-/* eslint-disable no-undef */
-const isPlainObject = require('../is-plain-object.js')
+import isPlainObject from '../is-plain-object'
 
 describe('isPlainObject', () => {
   it('test function', () => {
-    function Person(name) {
-      this.name = name
+    class Person {
+      constructor(public name: string) {
+        this.name = name
+      }
     }
-    const p1 = new Person('小明')
 
+    const p1 = new Person('小明')
     expect(isPlainObject({})).toBe(true)
     expect(isPlainObject({ a: 1, aaa: 43 })).toBe(true)
     expect(isPlainObject([])).toBe(false)
