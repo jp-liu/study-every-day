@@ -265,7 +265,7 @@ function sayName() {
   sss() // window: 独立函数调用
   person.sayName() // person: 隐式调用
   person.sayName() // person: 隐式调用
-  ;(b = person.sayName)() // window: 赋值表达式(独立函数调用)
+  ;(b = person.sayName)() // window: 赋值表达式(独立函数调用), 使用 = 号运算符之后,返回了 person.sayName 这个函数方法,后续调用,跟 person 无关
 }
 
 sayName()

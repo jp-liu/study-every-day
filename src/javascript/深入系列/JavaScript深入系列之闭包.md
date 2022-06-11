@@ -90,9 +90,9 @@ fContext = {
 }
 ```
 
-**作用域链: ** 变量的访问权限,由作用域来决定, 而在 `JS` 中, 作用域链的存在, 延展了作用域, 由于我们在 `f` 函数的作用域链中,引用了父级的 `VO` 对象, 所以当 checkscope 函数上下文出栈后,它的上下文并没有被销毁回收, 而是继续存在于内存中,使得可以通过作用域链访问到父级`VO`中变量, 也就是 **自由变量**
+**作用域链: ** 变量的访问权限,由 **作用域** 来决定, 而在 `JS` 中, 作用域链的存在, 延展了 **作用域** , 由于我们在 `f` 函数的作用域链中,引用了父级的 `VO` 对象, 所以当 checkscope 函数上下文出栈后,它的上下文并没有被销毁回收, 而是继续存在于内存中,使得可以通过作用域链访问到父级`VO`中变量, 也就是 **自由变量**
 
-正是因为 JavaScript 做到了这一点，从而实现了闭包这个概念。
+正是因为 JavaScript 做到了这一点，从而实现了 **闭包** 这个概念。
 
 所以，让我们再看一遍实践角度上闭包的定义：
 
@@ -103,7 +103,7 @@ fContext = {
 
 > This combination of a function object and a scope (a set of variable bindings) in which the function’s variables are resolved is called a closure in the computer science literature.
 
-闭包在计算机科学中也只是一个普通的概念，大家不要去想得太复杂。
+**闭包** 在计算机科学中也只是一个 **普通** 的概念，大家不要去想得太复杂。
 
 ## 必刷题
 
