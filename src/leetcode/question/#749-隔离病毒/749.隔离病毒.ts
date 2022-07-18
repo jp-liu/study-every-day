@@ -23,7 +23,7 @@ function containVirus(isInfected: number[][]): number {
         if (isInfected[i][j] === 1) {
           const queue: number[][] = []
           queue.push([i, j])
-          const neighbor = new Set()
+          const neighbor = new Set<number>()
           let firewall = 0,
             idx = neighbors.length + 1
           isInfected[i][j] = -idx
